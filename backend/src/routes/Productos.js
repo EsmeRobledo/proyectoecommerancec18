@@ -1,12 +1,12 @@
 const { Router } = require('express')
 const multer = require('multer');
-const { extname } =require('path');
+const { extname } = require('path');
 
 const { buscarProducto,
     newProducto,
     eliminarProducto,
     modificarProducto, getProductos } = require('../controllers/ProductosController')
-    
+
 const MIMETYPES = ['image/jpeg', 'image/png'];
 
 const multerUpload = multer({

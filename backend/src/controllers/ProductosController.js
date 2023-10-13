@@ -3,7 +3,7 @@ const Producto = require('../models/Productos')
 
 const newProducto = async (reqest, response) => {
     try {
-       // const producto = reqest.body
+        // const producto = reqest.body
         const product = new Producto({
             ...reqest.body, img: reqest.file.originalname
         })
