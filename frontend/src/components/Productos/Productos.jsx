@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Card, Button } from 'react-bootstrap'
-
+import {CartContext} from '../../Context/Cart'
+import { useNavigate } from 'react-router-dom'
 
 function Productos() {
 const [productos, setProductos] = useState([])
+const {addProductToCart} = useContext(CartContext)
+const navigate = useNavigate()
+
+const verMas = (id) =>{
+  navigate(`/ProdDetalle/${id}`)
+}
 useEffect(() =>{
     fetch("http://localhost:3002/productos/getProdList")
     .then(req => req.json()).then(response =>{
@@ -33,7 +40,8 @@ useEffect(() =>{
                {producto.existencias}
                </Card.Text>
 
-               <Button variant="primary">Comprar</Button>
+               <Button variant="primary" onClick={() => addProductToCart(producto)}>Comprar</Button>
+               <Button variant="primary" onClick={() => verMas(producto.id)}>Ver Mas..</Button>
              </Card.Body>
            </Card>
            )
