@@ -1,12 +1,51 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CartContext } from '../../Context/Cart'
-import { Row, Col, ListGroup } from 'react-bootstrap'
+import { Row, Col, ListGroup, Alert } from 'react-bootstrap'
 import CartItemHeader from './CartItemHeader'
 import CartItem from './CartItem'
+
+import { PayPalButtons } from '@paypal/react-paypal-js'
+
 function Cart() {
   const {cart} = useContext(CartContext)
+  const style = {"layout":"vertical"};
+  const [isPaid, setIsPaid] = useState(false)
   //iva varia segun el pais 
   const IVA = 0.16
+
+  const handleCreateOrder = (data, actions) => {
+    const order = actions.order.create({
+        purchase_units: [
+            {
+                amount: {
+                    value: (cart.amount * (1 + IVA)).toFixed(2),
+                    currency_code: "MXN"
+                },
+                description: "Compra de productos en UCamp Store",
+                shipping_preference: "NO_SHIPPING"
+            }
+        ],
+        merchant_name: "UCamp Store"
+        
+    })
+
+    console.log("order", order)
+
+    return order
+
+}
+
+const handleCancelledPayment = (data, actions) => {
+    console.log("data", data)
+    console.log("actions", actions)
+
+}
+
+const handlePaidOrder = (data, actions) => {
+    console.log("data", data)
+    console.log("actions", actions)
+    setIsPaid(true)
+}
     return (
     <>
         <div>
@@ -47,6 +86,26 @@ function Cart() {
                              <span className='text-bold'> A pagar <sub>(Subtotal + IVA)</sub></span>: { cart.amount * (1 + IVA)}
                     </Col>
                 </Row>
+                <hr/>
+                        
+                        <Row>
+                            <Col md={4}>
+                                {!isPaid ? (
+                                    <PayPalButtons
+                                        // disabled={false}
+                                        forceReRender={[style]}
+                                        fundingSource={undefined}
+                                        createOrder={handleCreateOrder}
+                                        onApprove={ handlePaidOrder }
+                                        onCancel={ handleCancelledPayment}
+                                    />
+                                    ): (
+                                        <Alert variant='success'>Pago realizado</Alert>
+                                    )
+                                }
+                                
+                            </Col>
+                        </Row>
 
 
             </>

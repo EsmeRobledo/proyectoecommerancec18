@@ -1,15 +1,16 @@
 import {Row, Col, Alert} from 'react-bootstrap'
 
+
 function CartItemHeader() {
     const headerFieldColor = "secondary"
 
     return(
         <Row>
-            <Col>
+            <Col md={2}>
                 <Alert variant={headerFieldColor}>Cantidad</Alert>
             </Col>
             <Col>
-                <Alert variant={headerFieldColor}>Categoria</Alert>
+                <Alert variant={headerFieldColor}>Categoría</Alert>
             </Col>
             <Col>
                 <Alert variant={headerFieldColor}>Producto</Alert>
@@ -25,7 +26,6 @@ function CartItemHeader() {
             </Col>
         </Row>
     )
-
 }
 
 export default CartItemHeader
