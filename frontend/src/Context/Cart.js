@@ -1,5 +1,4 @@
 import { useState, createContext, useEffect } from "react";
-
 const CartContext = createContext()
 
 const initialState = {
@@ -18,7 +17,7 @@ function CartProvider({ children }) {
   // buscar si el producto ya esta en el carrito, obtener su posicion
   const findProductInCart = (product) => {
 
-    return cart.items.findIndex(item => item.id === product.id)
+    return cart.items.findIndex(item => item._id === product._id)
   }
 
   // Agregar un producto al carrito
@@ -27,7 +26,7 @@ function CartProvider({ children }) {
     const itemPosition = findProductInCart(product)
 
     // si el producto ya esta en el carrito, aumentar su cantidad
-    if (itemPosition != -1) {
+    if (itemPosition !== -1) {
       cart.items[itemPosition].quantity += 1
 
     } else { // si el producto no esta en el carrito, agregarlo al carrito y aumentar el total de productos 
@@ -35,16 +34,12 @@ function CartProvider({ children }) {
       cart.total += 1 // aumentar el total de productos
     }
 
-    var frutas = ["Banana", "Orange", "Apple", "Mango"];
-
-    frutas[1] = "Kiwi"
-
     // aumentar el total a pagar
-    cart.amount += product.price
+    cart.amount += product.precio
 
     // actualizar el estado del carrito, el hook useEffect se encarga de actualizar el localStorage
     setCart({ ...cart })
-
+    console.log(cart)
     //setCart( {items: cart.items, total: cart.total, amount: cart.amout} )
   }
 
@@ -54,10 +49,10 @@ function CartProvider({ children }) {
     const itemPosition = findProductInCart(product)
 
     // si itemPosition no es -1, eliminar el producto del carrito
-    if (itemPosition != -1) {
+    if (itemPosition !== -1) {
       cart.items.splice(itemPosition, 1)
       cart.total -= 1
-      cart.amount -= product.price
+      cart.amount -= product.precio
 
 
       // actualizar el estado del carrito, el hook useEffect se encarga de actualizar el localStorage
@@ -71,12 +66,12 @@ function CartProvider({ children }) {
     const itemPosition = findProductInCart(product)
 
     // si itemPosition no es -1, decrementar la cantidad del producto y el total a pagar
-    if (itemPosition != -1) {
+    if (itemPosition !== -1) {
       if (cart.items[itemPosition].quantity === 1) {
         deleteProductFromCart(product)
       } else {
         cart.items[itemPosition].quantity -= 1
-        cart.amount -= product.price
+        cart.amount -= product.precio
 
         // actualizar el estado del carrito, el hook useEffect se encarga de actualizar el localStorage
         setCart({ ...cart })

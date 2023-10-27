@@ -17,24 +17,23 @@ function CartItem({item}) {
                     () => {addProductToCart(item)}
                 }>+</Button>
             </Col>
-            <Col>{item.category}</Col>
             <Col>
-                {item.title}
+                {item.nombre}
             </Col>
             <Col>
-                {item.description && item.description.length? (
-                        item.description
+                {item.descripcion && item.descripcion.length? (
+                        item.descripcion
                     ): (
                         <Alert variant='warning'>No hay descripción</Alert>
                     )
                 }
             </Col>
             <Col>
-                { item.price}
+                { item.precio}
             </Col>
 
             <Col>
-                { item.price * item.quantity }
+                { item.precio * item.quantity }
             </Col>
         </Row>
     )

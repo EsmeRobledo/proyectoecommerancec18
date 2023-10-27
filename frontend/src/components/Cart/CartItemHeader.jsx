@@ -10,9 +10,6 @@ function CartItemHeader() {
                 <Alert variant={headerFieldColor}>Cantidad</Alert>
             </Col>
             <Col>
-                <Alert variant={headerFieldColor}>Categoría</Alert>
-            </Col>
-            <Col>
                 <Alert variant={headerFieldColor}>Producto</Alert>
             </Col>
             <Col>

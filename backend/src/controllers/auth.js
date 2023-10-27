@@ -17,16 +17,17 @@ const login = async (req, res) => {
     //consultar el usuario desde la BD
     const user = await User.findOne({ email })
     console.log(user)
-
+    
     if (email === user.email && bcrypt.compareSync(password, user.password)) {
         const userJSON = user.toJSON()
         delete userJSON.password
-
+        const rol = user.rol
         const token = jwt.sign(userJSON, process.env.JWTKEY, { expiresIn: '7d' })
 
         return res.json({
             success: true,
             message: 'Usuario loggeado correctamente',
+            rol,
             token
         })
     }

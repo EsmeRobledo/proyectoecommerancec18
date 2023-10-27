@@ -27,7 +27,7 @@ useEffect(() =>{
          {productos.map( (producto, index) => {
            return(
              <Card className='card-menu' key={index} style={{ width: '18rem', background: 'transparent' }}>
-             <Card.Img variant="top" src="" />
+             <Card.Img variant="top" src={`http://localhost:3001/`+producto.img} />
              <Card.Body>
                <Card.Title>{producto.nombre}</Card.Title>
                <Card.Text>
